@@ -1,0 +1,51 @@
+# read csv
+import pandas as pd
+import numpy as np
+
+Column_0 = []
+
+# Spearhead: 20.5 inches long, divided by inches per row of 0.27 (26 pixels/96 pixels per inch) inches, leads to ~76 rows of cells.
+for x in range(1,77):
+    cell = 'Spearhead'
+    Column_0.append(cell)
+    
+# 22 ft in wood length, which is 264 inches, which is ~975 rows of cells, given each row is 0.27 (26 pixels/96 pixels per inch) inches. Divided by 2 to be split by coupling sleeve.
+for x in range(1,489):
+    cell = 'Wood Body'
+    Column_0.append(cell)
+    
+# 7 inches, divided by inches per row of 0.27 (26 pixels/96 pixels per inch) inches, leads to ~26 rows of cells.
+for x in range(1,27):
+    cell = 'Coupling Sleeve'
+    Column_0.append(cell)
+    
+# 22 ft in wood length, which is 264 inches, which is ~975 rows of cells, given each row is 0.27 (26 pixels/96 pixels per inch) inches. Divided by 2 to be split by coupling sleeve.
+for x in range(1,489):
+    cell = 'Wood Body'
+    Column_0.append(cell)
+    
+# 18 inches, divided by inches per row of 0.27 (26 pixels/96 pixels per inch) inches, leads to ~66 rows of cells.
+for x in range(1,67):
+    cell = 'Spike'
+    Column_0.append(cell)
+    
+# Create dataframe from list with headers (listtodf)
+df_sarissa = pd.DataFrame()
+df_sarissa['a'] = Column_0
+
+# Circumference of 4.32 inches given diameter of 3.5 cm. 4.32 inches divided by approximate amount inches visible in 2D shape is 4.32/2= 2.16 cells across divided by width of each cell of 0.83 (80 pixels/96 pixels per inch) = ~ 3 cells across
+from string import ascii_lowercase
+# where n is the number of columns you want
+n = 3
+df_2_Across = df_sarissa.assign(**{x: df_sarissa.iloc[:, 0] for x in ascii_lowercase[:n]})
+print(df_2_Across)
+    
+
+
+Combined_df =pd.concat([df_2_Across], axis=1)
+display(Combined_df)
+
+
+
+# to csv:
+Combined_df.to_csv(r"C:\Users\murra\OneDrive - Umich\WebscrapingOutput_F\Sarissa\Code_Output\S_v29.csv",index=False)
